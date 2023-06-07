@@ -1,0 +1,36 @@
+--create a clothing store data base
+
+create table ClothingStore (id integer primary key, Item text, Material integer, Brand integer, Price integer, aisle integer);
+
+insert into clothingstore values
+(1, "hat", "fabric", "expensive", 15, 1),
+(2, "caps", "fabric", "cheap", 5, 1),
+(3, "sunglasses", "plastic", "cheap", 7, 2),
+(4, "earrings", "metal", "expensive", 50, 2),
+(5, "necklace", "metal", "expensive", 150, 2),
+(6, "shirts", "fabric", "cheap", 10, 3),
+(7, "blouses", "fabric", "expensive", 25, 3),
+(8, "jackets", "fabric", "expensive", 75, 3),
+(9, "bracelet", "plastic", "cheap", 2, 2),
+(10, "rings", "metal", "expensive", 75, 2),
+(11, "belts", "leather", "expensive", 25, 1),
+(12, "pants", "fabric", "cheap", 10, 3),
+(13, "skirts", "fabric", "cheap", 10, 3),
+(14, "socks", "fabric", "cheap", 2, 1),
+(15,"shoes", "leather", "expensive", 50, 4)
+;
+
+--display data base ordered by price 
+select * from clothingstore order by price asc;
+
+--What is the highest priced material?
+select material, Max(price) from clothingstore;
+
+--What is the lowest priced material?
+select material, Min(price) from clothingstore;
+
+--How many of each material is there?
+select material, count(price) from clothingstore group by material;
+
+--The sum price for each material
+select material, sum(price) from clothingstore group by material;
