@@ -1,6 +1,10 @@
 /*I created three seperate tables. Greek_characters, Roman_Names, and Astrological. I then added some information.*/
 CREATE TABLE Greek_characters (id INTEGER PRIMARY KEY, GreekName TEXT, Title TEXT, Symbols TEXT, Planets TEXT);
 
+CREATE TABLE Roman_Names (purpose_id INTEGER PRIMARY KEY, RomanName TEXT, Duties TEXT);
+
+CREATE TABLE Astrological (id INTEGER PRIMARY KEY, Zodiac TEXT, Element TEXT, RulingPlanet TEXT, House INTEGER, HouseName Text, Traits Text);
+
 INSERT INTO Greek_characters  VALUES (1, "Aphrodite", "Goddess", "Golden apple, dove, swan, and scallop shell", "Venus");
 INSERT INTO Greek_characters  VALUES (2, "Ares", "God", "Spear and helmet, armor, dog, chariot, torch, and vulture", "Mars");
 INSERT INTO Greek_characters  VALUES (3, "Zeus", "God", "Lightning bolt/thunderbolt, eagle, swan, clouds, bull, and oak tree.", "Jupiter");
@@ -21,8 +25,6 @@ INSERT INTO Greek_characters  VALUES (17, "Hestia", "Goddess", "Hearth", "astero
 INSERT INTO Greek_characters  VALUES (18, "Dionysus", "God", "Grapes, ivy, thyrsus of ivy and pine cone", "asteroid");
 INSERT INTO Greek_characters  VALUES (19, "Prometheus", "Titan", "n/a", "none");
 
-CREATE TABLE Roman_Names (purpose_id INTEGER PRIMARY KEY, RomanName TEXT, Duties TEXT);
-
 INSERT INTO Roman_Names VALUES (1, "Venus", "Goddess of Love");
 INSERT INTO Roman_Names VALUES (2, "Mars", "God of War");
 INSERT INTO Roman_Names VALUES (3, "Jupiter", " Ruler God of Olympus ");
@@ -42,8 +44,6 @@ INSERT INTO Roman_Names VALUES (16, "Terra", "Mother Earth");
 INSERT INTO Roman_Names VALUES (17, "Vesta", "Goddess of the Home");
 INSERT INTO Roman_Names VALUES (18, "Bacchus", "God of wine and vegetation.");
 INSERT INTO Roman_Names VALUES (19, "Prometheus", "God of Forethought and crafty counsel.");
-
-CREATE TABLE Astrological (id INTEGER PRIMARY KEY, Zodiac TEXT, Element TEXT, RulingPlanet TEXT, House INTEGER, HouseName Text, Traits Text);
 
 INSERT INTO Astrological VALUES (1, "Libra", "Air", "Venus", 7, "House of partnerships", "Balance and Loving");
 INSERT INTO Astrological VALUES (2, "Aries", "Fire", "Mars", 1, "House of Self", "Good leaders, assertive, and confident.");
