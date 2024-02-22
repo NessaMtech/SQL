@@ -1,0 +1,78 @@
+/*I created three seperate tables. Greek_characters, Roman_Names, and Astrological. I then added some information.*/
+CREATE TABLE Greek_characters (id INTEGER PRIMARY KEY, GreekName TEXT, Title TEXT, Symbols TEXT, Planets TEXT);
+
+INSERT INTO Greek_characters  VALUES (1, "Aphrodite", "Goddess", "Golden apple, dove, swan, and scallop shell", "Venus");
+INSERT INTO Greek_characters  VALUES (2, "Ares", "God", "Spear and helmet, armor, dog, chariot, torch, and vulture", "Mars");
+INSERT INTO Greek_characters  VALUES (3, "Zeus", "God", "Lightning bolt/thunderbolt, eagle, swan, clouds, bull, and oak tree.", "Jupiter");
+INSERT INTO Greek_characters  VALUES (4, "Poseidon", "God", "Trident.", "Neptune");
+INSERT INTO Greek_characters  VALUES (5, "Hades", "God", "Helmet, bident/scepter, and the horn of plenty", "Pluto");
+INSERT INTO Greek_characters  VALUES (6, "Apollo", "God", "Lyre, bow and arrow, python, a laurel wreath, and the sun", "Sun");
+INSERT INTO Greek_characters  VALUES (7, "Artemis", "Goddess", "Bow and arrow, deer, quiver, and the moon", "Moon");
+INSERT INTO Greek_characters  VALUES (8, "Hermes", "God", "Caduceus (rod staff with snakes entwined), winged shoes, winged hat, and tortoise shell", "Mercury");
+INSERT INTO Greek_characters  VALUES (9, "Cronus", "God", "n/a", "Saturn");
+INSERT INTO Greek_characters  VALUES (10, "Uranus", "God", "n/a", "Uranus");
+INSERT INTO Greek_characters  VALUES (11, "Hera", "Goddess", "Diadem/crown, pomegranate, peacock, and cow", "comet");
+INSERT INTO Greek_characters  VALUES (12, "Athena", "Goddess","Owl, olives/olive tree, spear, aegis, and snakes/serpents", "asteroid");
+INSERT INTO Greek_characters  VALUES (13, "Hephaestus", "God", "Hammer, anvil, fire, donkey, and volcano", "None");
+INSERT INTO Greek_characters  VALUES (14, "Demeter", "Goddess", "Grain, cornucopia, and bread", "Earth");
+INSERT INTO Greek_characters  VALUES (15, "Eros", "God", "Bow & arrow, cherub", "asteroid");
+INSERT INTO Greek_characters  VALUES (16, "Gaea", "God", "n/a", "Earth");
+INSERT INTO Greek_characters  VALUES (17, "Hestia", "Goddess", "Hearth", "asteroid");
+INSERT INTO Greek_characters  VALUES (18, "Dionysus", "God", "Grapes, ivy, thyrsus of ivy and pine cone", "asteroid");
+INSERT INTO Greek_characters  VALUES (19, "Prometheus", "Titan", "n/a", "none");
+
+CREATE TABLE Roman_Names (purpose_id INTEGER PRIMARY KEY, RomanName TEXT, Duties TEXT);
+
+INSERT INTO Roman_Names VALUES (1, "Venus", "Goddess of Love");
+INSERT INTO Roman_Names VALUES (2, "Mars", "God of War");
+INSERT INTO Roman_Names VALUES (3, "Jupiter", " Ruler God of Olympus ");
+INSERT INTO Roman_Names VALUES (4, "Neptune", "God of the Seas ");
+INSERT INTO Roman_Names VALUES (5, "Pluto", "God of the Underworld ");
+INSERT INTO Roman_Names VALUES (6, "Apollo", "God of the Sun");
+INSERT INTO Roman_Names VALUES (7, "Diana", "Goddess of the Moon");
+INSERT INTO Roman_Names VALUES (8, "Mercury", "God of Wit & Health");
+INSERT INTO Roman_Names VALUES (9, "Saturn", "God of Sky & Time");
+INSERT INTO Roman_Names VALUES (10, "Uranus", "Father of Titans, God of Sky and Choas");
+INSERT INTO Roman_Names VALUES (11, "Juno", "Goddess of Marriage");
+INSERT INTO Roman_Names VALUES (12, "Minerva", "Goddess of Wisdom");
+INSERT INTO Roman_Names VALUES (13, "Vulcan", "God of Fire");
+INSERT INTO Roman_Names VALUES (14, "Ceres", "Goddess of Grain");
+INSERT INTO Roman_Names VALUES (15, "Cupid", "God of Love");
+INSERT INTO Roman_Names VALUES (16, "Terra", "Mother Earth");
+INSERT INTO Roman_Names VALUES (17, "Vesta", "Goddess of the Home");
+INSERT INTO Roman_Names VALUES (18, "Bacchus", "God of wine and vegetation.");
+INSERT INTO Roman_Names VALUES (19, "Prometheus", "God of Forethought and crafty counsel.");
+
+CREATE TABLE Astrological (id INTEGER PRIMARY KEY, Zodiac TEXT, Element TEXT, RulingPlanet TEXT, House INTEGER, HouseName Text, Traits Text);
+
+INSERT INTO Astrological VALUES (1, "Libra", "Air", "Venus", 7, "House of partnerships", "Balance and Loving");
+INSERT INTO Astrological VALUES (2, "Aries", "Fire", "Mars", 1, "House of Self", "Good leaders, assertive, and confident.");
+INSERT INTO Astrological VALUES (3, "Sagittarius", "Fire", "Jupiter", 9, "House of Purpose", "Positive and adventurous");
+INSERT INTO Astrological VALUES (4, "Pices", "Water", "Neptune", 12, "House of subconscious", "Dreamy and Kind");
+INSERT INTO Astrological VALUES (5, "Scorpio", "Water", "Pluto", 8, "House of transformation", "Secretive and persistant");
+INSERT INTO Astrological VALUES (6, "Leo", "Fire", "Sun", 5, "House of pleasure", "Magnetic and charismatic");
+INSERT INTO Astrological VALUES (7, "Cancer", "Water", "Moon", 4, "House of family and home", "Caretakers and home bodies");
+INSERT INTO Astrological VALUES (8, "Virgo", "Earth", "Mercury", 6, "House of health", "Detial Oriented and organized");
+INSERT INTO Astrological VALUES (9, "Capricorn", "Earth", "Saturn", 10, "House of social status", "Ambitious and hard working");
+INSERT INTO Astrological VALUES (10, "Aquarius", "Air", "Uranus", 11, "House of friendships", "Creative, original, and rebellious");
+INSERT INTO Astrological VALUES (11, "Gemini", "Air", "Mercury", 3, "House of communication", "Fast, adaptive, and greate communicators");
+INSERT INTO Astrological VALUES (12, "Taurus", "Earth", "Venus", 2, "House of value and possessions", "Strong, stable, and reliable");
+
+/*Just selecting astrological table and ordering it.*/
+select * from Astrological order by house;
+
+/*I'm joining two tables that list with GreekNames and RomanNames and Duties*/
+
+SELECT gc.GreekName "GreekName", rn.RomanName "RomanName", rn.Duties "Rule", gc.Symbols "Symbolism"
+FROM Greek_characters gc
+LEFT OUTER JOIN Roman_Names rn
+ON gc.id = purpose_id;
+
+/*I'm joining three tables to view Greek Gods&Goddesses, their duties, zodiac, corrosponding planets, and house number & name, and zodiac traits*/
+
+SELECT gc.GreekName "GreekName", rn.Duties "Role", z. "Zodiac", z.RulingPlanet "Corrosponding Planets", House, HouseName "House Name", Traits "Traits"
+FROM Greek_characters gc
+LEFT OUTER JOIN Roman_Names rn
+ON gc.id = purpose_id
+JOIN Astrological z
+ON z.RulingPlanet = gc.Planets order by House;
