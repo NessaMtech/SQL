@@ -1,4 +1,4 @@
-/*This project utilized data from the following Pharma Analysis website: https://www.db-fiddle.com/f/dm9BnpSRSkY9EoQ1GYrxR9/2 ; I practice the SQL queries*/
+/*This project utilized data from the following Pharma Analysis website: https://www.db-fiddle.com/f/dm9BnpSRSkY9EoQ1GYrxR9/2 ; I practice the SQL queries using joins*/
 
 -- Create the 'prescriptions' table
 CREATE TABLE prescriptions (
