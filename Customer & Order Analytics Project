@@ -1,0 +1,79 @@
+/*In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.*/
+
+SELECT * FROM BIT_DB.customers LIMIT 20;
+
+/*After running that query, you should be able to answer: What columns are in the customers table?
+Now re-write the query to answer this one: What columns are in the JanSales table?
+What column(s) do the customers table and the JanSales table have in common? 
+Run both queries again and compare the results if you missed it!*/
+
+/* (order_id, acctnum)*/
+/* (orderID, Product, Quantity, price, orderdate, location)*/
+
+select * from BIT_DB.JanSales limit 20*;
+
+/*SELECT * FROM BIT_DB.customers 
+WHERE length(order_id) = 6
+AND order_id <> 'Order ID'*/
+
+SELECT * FROM BIT_DB.customers WHERE length(order_id) = 6 AND order_id <> 'Order ID' limit 20;
+
+/*How many orders were placed in January? Remember to filter out the blank and incorrect 
+order IDs like we did in the "dealing with messy data" section of the previous lesson!*/
+
+select count(orderID)
+from BIT_DB.JanSales
+where length(orderID) = 6
+and orderID <> 'Order ID';
+
+/*How many of those orders were for an iPhone?*/
+select count(orderID)
+from BIT_DB.JanSales
+where Product='iPhone'
+and length(orderID) = 6
+and orderID <> 'Order ID';
+
+/*Select the customer account numbers for all the orders that were placed in February.*/
+select c.acctnum numbers
+from BIT_DB.customers c
+inner join BIT_DB.FebSales fs
+on c.order_id = fs.orderID
+where length(orderID) = 6
+and orderID <> 'Order ID';
+
+/*Which product was the cheapest one sold in January, and what was the price?*/
+
+select distinct Product, price
+from BIT_DB.JanSales
+where price in (SELECT min(price) FROM BIT_DB.JanSales)
+and length(orderID) = 6
+and orderID <> 'Order ID';
+
+/*What is the total revenue for each product sold in January?
+(Revenue can be calculated using the number of products sold and the price of the products).*/
+
+select Product, sum(Quantity)*price as 'Revenue'
+from BIT_DB.JanSales
+where length(orderID) = 6
+and orderID <> 'Order ID'
+group by Product;
+
+/*Which products were sold in February at 548 Lincoln St, Seattle, 
+WA 98101, how many of each were sold, and what was the total revenue? */
+
+select Product, sum(Quantity), sum(Quantity)*price as 'Revenue'
+from BIT_DB.FebSales
+where location = '548 Lincoln St, Seattle, WA 98101'
+and length(orderID) = 6
+and orderID <> 'Order ID'
+group by Product;
+
+/*How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?*/
+
+select count(acctnum) as 'Total customers', AVG(Quantity*price) as 'Average Amount Spent'
+from BIT_DB.customers c
+inner join BIT_DB.FebSales fs
+on c.order_id = fs.orderID
+where quantity > 2
+and length(orderID) = 6
+and orderID <> 'Order ID';
