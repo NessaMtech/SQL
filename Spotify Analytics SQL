@@ -1,0 +1,123 @@
+/*For this project, I downloaded Spotify data from Kaggle.
+  Then I created a table to insert Spotify data into.
+  Finally, I performed analytics on the data using SQL.*/
+
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL );
+
+/*I inserted the Spotify Data .csv into the table.
+Next, I explored the data using the following SQL.*/ 
+
+SELECT * FROM BIT_DB.Spotifydata;
+
+/*How man ids are in this table?*/
+
+select count(id) from BIT_DB.Spotifydata;
+
+/*What is the average danceability by artist and track? Who are the top 10 artists based on popularity? */
+
+select danceability, artist_name, track_name
+from BIT_DB.Spotifydata order by artist_name;
+
+select avg(danceability), artist_name, track_name
+from BIT_DB.Spotifydata 
+group by artist_name, track_name
+order by avg(danceability) desc limit 10;
+
+/*What artist released the longest song?*/
+
+SELECT artist_name
+FROM BIT_DB.Spotifydata
+WHERE duration_ms = (SELECT MAX(duration_ms) FROM BIT_DB.Spotifydata);
+
+select artist_name, max(duration_ms)
+from BIT_DB.Spotifydata
+order by max(duration_ms);
+
+/*What's the average danceability for the 10 most popular songs?*/
+select avg(danceability), track_name as'popular songs'
+from BIT_DB.Spotifydata
+group by popularity order by avg(danceability) desc limit 10;
+
+
+/*Come up with your own questions and try to answer them.*/
+/*1.Data Retrival question: What are the names of all the artist in table?*/
+
+select artist_name
+from BIT_DB.Spotifydata
+group by artist_name order by artist_name asc;
+
+/*2. Filtering Questions: What songs did Ariana Grande have? What songs did Ariana Grande and Doja Cat have?*/
+
+select track_name, artist_name
+from BIT_DB.Spotifydata
+where artist_name= 'Ariana Grande';
+
+SELECT track_name, artist_name
+FROM BIT_DB.Spotifydata
+WHERE artist_name IN ('Ariana Grande', 'Doja Cat')
+order by artist_name;
+
+
+
+/*3.Subquery Question: What is the average loudness of the most popular song?*/
+
+SELECT AVG(loudness) AS average_loudness
+FROM BIT_DB.Spotifydata
+WHERE popularity = (SELECT MAX(popularity) FROM BIT_DB.Spotifydata);
+
+/*4.Aggregation Question: What is the total loudness for each artist? what's the total loudness?*/
+
+SELECT sum(loudness), artist_name
+FROM BIT_DB.Spotifydata
+group by artist_name order by sum(loudness) desc;
+
+select sum(loudness)
+from BIT_DB.Spotifydata;
+
+/*5. Data Retrival: How many songs are in this table and what are their names?*/
+SELECT COUNT(track_name) AS total_songs
+FROM BIT_DB.Spotifydata;
+
+select track_name
+FROM BIT_DB.Spotifydata;
+
+/*6. What was Ariana Grande most popular song? Compare Ariana Grande's most popular song with Doj Cat's most popular song. Who's song weas most popular?*/
+select artist_name, track_name, max(popularity)
+from BIT_DB.Spotifydata
+where artist_name = 'Ariana Grande';
+
+SELECT
+    (SELECT track_name 
+    FROM BIT_DB.Spotifydata 
+    WHERE artist_name = 'Ariana Grande' 
+    ORDER BY popularity DESC LIMIT 1) 
+    AS Ariana_Top_Song,
+    (SELECT track_name 
+    FROM BIT_DB.Spotifydata 
+    WHERE artist_name = 'Doja Cat' 
+    ORDER BY popularity DESC LIMIT 1) 
+    AS Doja_Top_Song;
+    
+select artist_name, track_name, max(popularity)
+FROM BIT_DB.Spotifydata
+where artist_name in('Ariana Grande', 'Doja Cat')
+order by popularity limit 1;
