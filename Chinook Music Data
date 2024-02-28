@@ -1,3 +1,5 @@
+/*This project was created by downloading data from kraggle. I then ran different queries using the data.*/
+
 SELECT *
   FROM chinook.albums;
 
